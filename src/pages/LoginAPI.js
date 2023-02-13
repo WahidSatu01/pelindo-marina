@@ -5,6 +5,7 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -32,6 +33,19 @@ class LoginAPI extends Component {
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
+        if (json.token) {
+          Alert.alert("Login successful");
+          this.props.navigation.reset({
+            index: 0,
+            routes: [{ name: "TabNavigator" }],
+          });
+        } else if (this.state.username === "") {
+          Alert.alert("Enter Username !");
+        } else if (this.state.password === "") {
+          Alert.alert("Enter Password !");
+        } else {
+          Alert.alert("Check credentials");
+        }
       })
       .catch((eror) => console.log(eror));
   };
